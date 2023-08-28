@@ -12,7 +12,7 @@
     <groupId>ch.vd.tools</groupId>
     <artifactId>ig2fedi</artifactId>
     <name>instagram2pixelfed</name>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
 
     <description>
         Command line runner for importing Instagram posts into a Mastodon-compatible instance
@@ -35,7 +35,7 @@
         <url>git@github.com:DSI-VD/instagram2pixelfed.git</url>
         <connection>scm:git:${project.scm.url}</connection>
         <developerConnection>scm:git:${project.scm.url}</developerConnection>
-        <tag>v0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
