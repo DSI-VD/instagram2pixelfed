@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.3</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>ch.vd.tools</groupId>
+    <artifactId>ig2fedi</artifactId>
+    <name>instagram2pixelfed</name>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <description>
+        Command line runner for importing Instagram posts into a Mastodon-compatible instance
+    </description>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <docker.base-image.ubi9>registry.access.redhat.com/ubi9/openjdk-17-runtime:latest</docker.base-image.ubi9>
+        <docker.base-image.alpine>eclipse-temurin:17-jre-alpine</docker.base-image.alpine>
+
+        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
+        <google.jib.version>3.3.2</google.jib.version>
+    </properties>
+
+    <scm>
+        <url>git@github.com:DSI-VD/instagram2pixelfed.git</url>
+        <connection>scm:git:${project.scm.url}</connection>
+        <developerConnection>scm:git:${project.scm.url}</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- spring context -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- devtools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                    <scmCommentPrefix>chore: [auto]</scmCommentPrefix>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${google.jib.version}</version>
+                <executions>
+                    <execution>
+                        <id>docker-image-ubi</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <from>
+                                <image>${docker.base-image.ubi9}</image>
+                            </from>
+                            <to>
+                                <image>ghcr.io/dsi-vd/instagram2pixelfed</image>
+                                <tags>
+                                    <tag>${project.version}-ubi9</tag>
+                                </tags>
+                            </to>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>docker-image-alpine</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <from>
+                                <image>${docker.base-image.alpine}</image>
+                            </from>
+                            <to>
+                                <image>ghcr.io/dsi-vd/instagram2pixelfed</image>
+                                <tags>
+                                    <tag>${project.version}-alpine</tag>
+                                    <tag>latest</tag>
+                                </tags>
+                            </to>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
