@@ -1,4 +1,4 @@
-# ig2fedi - Instagram cross-posting tool
+# instagram2pixelfed - Instagram cross-posting tool
 
 Command-line runner for cross-posting instagram posts to any Mastodon and Pixelfed.
 
