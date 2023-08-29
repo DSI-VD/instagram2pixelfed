@@ -21,5 +21,6 @@ jobs:
       - name: Build JIB container and publish
         shell: bash
         run: |-
-          mvn package -Djib.to.auth.username=${{ github.actor }} \
-                      -Djib.to.auth.password=${{ secrets.GITHUB_TOKEN }}
+          mvn --batch-mode package -Pdocker-release \
+              -Djib.to.auth.username=${{ github.actor }} \
+              -Djib.to.auth.password=${{ secrets.GITHUB_TOKEN }}
