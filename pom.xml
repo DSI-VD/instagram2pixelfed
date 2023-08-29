@@ -22,6 +22,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <maven.deploy.skip>true</maven.deploy.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <docker.base-image.ubi9>registry.access.redhat.com/ubi9/openjdk-17-runtime:latest</docker.base-image.ubi9>
